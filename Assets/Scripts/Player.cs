@@ -1,18 +1,34 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-  public GameObject bullet;
+  public GameObject bulletPrefab;
 
   public Transform shottingOffset;
-    // Update is called once per frame
-    void Update()
+
+  void Start()
+  {
+    Enemy.OnEnemyDied += EnemyOnOnEnemyDied;
+  }
+
+  private void OnDestroy()
+  {
+    Enemy.OnEnemyDied -= EnemyOnOnEnemyDied;
+  }
+
+  private void EnemyOnOnEnemyDied(int points)
+  {
+    Debug.Log($"IK IT DIED, points: {points}");
+  }
+
+  void Update()
     {
       if (Input.GetKeyDown(KeyCode.Space))
       {
-        GameObject shot = Instantiate(bullet, shottingOffset.position, Quaternion.identity);
+        GameObject shot = Instantiate(bulletPrefab, shottingOffset.position, Quaternion.identity);
         Debug.Log("Bang!");
 
         Destroy(shot, 3f);
