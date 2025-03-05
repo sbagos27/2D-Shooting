@@ -38,9 +38,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.Save(); 
             highscoreText.text = $"Hi-Score\n{highscore:D4}";
         }
-        
-        
     }
+    
     void Start()
     {
         highscore = PlayerPrefs.GetInt("Hi-Score", 0);

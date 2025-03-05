@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -8,6 +9,8 @@ public class Enemy : MonoBehaviour
     public static event EnemyDied OnEnemyDied;
     private GameManager gm;
     public int enemyType;
+
+    public GameObject parent;
     
     void Awake()
     {
@@ -21,8 +24,11 @@ public class Enemy : MonoBehaviour
       Destroy(collision.gameObject);
       
       OnEnemyDied?.Invoke(10);
+      Destroy(gameObject);
+      MoveArmy.enemyCount--;
+      MoveArmy moveArmy = parent.GetComponent<MoveArmy>();
+      moveArmy.moveSpeed *= 1.1f;
 
-      // todo kill enemy
     }
     
 }
