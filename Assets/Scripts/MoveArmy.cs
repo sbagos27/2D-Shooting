@@ -29,9 +29,11 @@ public class MoveArmy : MonoBehaviour
 
         if (transform.position.x > startPositionX + farthest || transform.position.x < startPositionX - farthest)
         {
-            transform.Translate(Vector3.down * 0.5f);
             moveSpeed = -moveSpeed; 
+            transform.Translate(Vector3.down * 0.5f);
+
         }
+        
 
         if (enemyCount == 0)
         {
