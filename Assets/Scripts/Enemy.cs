@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -11,11 +12,13 @@ public class Enemy : MonoBehaviour
     public int enemyType;
 
     public GameObject parent;
+
     
     void Awake()
     {
         gm = FindObjectOfType<GameManager>();
     }
+    
     void OnCollisionEnter2D(Collision2D collision)
     {
       Debug.Log("Ouch!");
@@ -27,7 +30,14 @@ public class Enemy : MonoBehaviour
       Destroy(gameObject);
       MoveArmy.enemyCount--;
       MoveArmy moveArmy = parent.GetComponent<MoveArmy>();
-      moveArmy.moveSpeed *= 1.1f;
+      if (moveArmy.moveSpeed >0)
+      {
+          moveArmy.moveSpeed += .25f;
+      }
+      else
+      {
+          moveArmy.moveSpeed -= .25f;
+      }
 
     }
     

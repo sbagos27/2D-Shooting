@@ -23,9 +23,9 @@ public class DemoButton : MonoBehaviour
         }
     }
 
-    public void CreditScenen()
+    public void LoadCredit()
     {
-        
+        SceneManager.LoadScene("CreditScene");
     }
 
 }
