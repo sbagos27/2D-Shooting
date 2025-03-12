@@ -12,22 +12,31 @@ public class Enemy : MonoBehaviour
     public int enemyType;
 
     public GameObject parent;
+    Animator enemyAnimator;
 
-    
+    void Start()
+    {
+        enemyAnimator = GetComponent<Animator>();
+
+    }    
     void Awake()
     {
         gm = FindObjectOfType<GameManager>();
     }
     
-    void OnCollisionEnter2D(Collision2D collision)
-    {
+    void OnCollisionEnter2D(Collision2D collision) {
+        
+        
       Debug.Log("Ouch!");
       gm.hitEnemy(enemyType);
+      
+      enemyAnimator.SetTrigger("Death");
+      StartCoroutine(StallForSeconds(.4f));
+
 
       Destroy(collision.gameObject);
       
       OnEnemyDied?.Invoke(10);
-      Destroy(gameObject);
       MoveArmy.enemyCount--;
       MoveArmy moveArmy = parent.GetComponent<MoveArmy>();
       if (moveArmy.moveSpeed >0)
@@ -39,6 +48,11 @@ public class Enemy : MonoBehaviour
           moveArmy.moveSpeed -= .25f;
       }
 
+    }
+    IEnumerator StallForSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        Destroy(gameObject);
     }
     
 }

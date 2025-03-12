@@ -54,6 +54,14 @@ public class Player : MonoBehaviour
 
   void OnCollisionEnter2D()
   {
+    playerAnimator.SetTrigger("Death");
+    StartCoroutine(StallForSeconds(.4f));
+
+  }
+  
+  IEnumerator StallForSeconds(float seconds)
+  {
+    yield return new WaitForSeconds(seconds);
     SceneManager.LoadScene("CreditScene");
 
   }
