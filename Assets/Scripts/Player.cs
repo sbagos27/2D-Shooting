@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
   void OnCollisionEnter2D()
   {
     playerAnimator.SetTrigger("Death");
-    StartCoroutine(StallForSeconds(.75f));
+    StartCoroutine(StallForSeconds(.8f));
 
   }
   
