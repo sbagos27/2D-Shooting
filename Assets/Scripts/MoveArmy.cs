@@ -15,6 +15,9 @@ public class MoveArmy : MonoBehaviour
     
     public GameObject bulletPrefab;
     public Transform shottingOffset;
+    AudioSource audioSrc;
+    public AudioClip blastClip;
+    public AudioClip deathClip;
 
     private void newWave()
     {
@@ -22,10 +25,17 @@ public class MoveArmy : MonoBehaviour
         SceneManager.LoadScene("CreditScene");
         
     }
+
+    public void playDeath()
+    {
+        audioSrc.clip = deathClip;
+        audioSrc.Play();
+    }
     
     void Start()
     {
         startPositionX = transform.position.x; 
+        audioSrc = GetComponent<AudioSource>();
         StartCoroutine(Shoot());
 
     }
@@ -34,8 +44,9 @@ public class MoveArmy : MonoBehaviour
     {
         while (true)
         {
+            audioSrc.clip = blastClip;
+            audioSrc.Play();
             GameObject shot = Instantiate(bulletPrefab, shottingOffset.position, Quaternion.identity);
-
             Destroy(shot, 3f);
             yield return new WaitForSeconds(4f);
 

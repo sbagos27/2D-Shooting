@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public void hitEnemy(int type)
     {
+        MoveArmy.enemyCount--;
         if (type == 1)
         {
             score += 10;

@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         enemyAnimator = GetComponent<Animator>();
-
     }    
     void Awake()
     {
@@ -28,16 +27,15 @@ public class Enemy : MonoBehaviour
         
         
       Debug.Log("Ouch!");
+      
       gm.hitEnemy(enemyType);
       
       enemyAnimator.SetTrigger("Death");
-      StartCoroutine(StallForSeconds(.4f));
 
 
       Destroy(collision.gameObject);
       
       OnEnemyDied?.Invoke(10);
-      MoveArmy.enemyCount--;
       MoveArmy moveArmy = parent.GetComponent<MoveArmy>();
       if (moveArmy.moveSpeed >0)
       {
@@ -47,10 +45,14 @@ public class Enemy : MonoBehaviour
       {
           moveArmy.moveSpeed -= .25f;
       }
+      
+      
+      StartCoroutine(StallForSeconds(.4f, moveArmy));
 
     }
-    IEnumerator StallForSeconds(float seconds)
+    IEnumerator StallForSeconds(float seconds, MoveArmy moveArmy)
     {
+        moveArmy.playDeath(); 
         yield return new WaitForSeconds(seconds);
         Destroy(gameObject);
     }

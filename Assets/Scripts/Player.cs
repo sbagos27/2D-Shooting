@@ -11,9 +11,14 @@ public class Player : MonoBehaviour
 
   Animator playerAnimator;
   public float moveSpeed = 5f;
+  AudioSource audioSrc;
+  public AudioClip blasterSound;
+  public AudioClip deathSound;
+
   
   void Start()
   {
+    audioSrc = GetComponent<AudioSource>();
     playerAnimator = GetComponent<Animator>();
     Enemy.OnEnemyDied += EnemyOnOnEnemyDied;
   }
@@ -44,6 +49,8 @@ public class Player : MonoBehaviour
       
       if (Input.GetKeyDown(KeyCode.Space))
       {
+        audioSrc.clip = blasterSound;
+        audioSrc.Play();
         playerAnimator.SetTrigger("Shoot");
         GameObject shot = Instantiate(bulletPrefab, shottingOffset.position, Quaternion.identity);
         Debug.Log("Bang!");
@@ -55,12 +62,14 @@ public class Player : MonoBehaviour
   void OnCollisionEnter2D()
   {
     playerAnimator.SetTrigger("Death");
-    StartCoroutine(StallForSeconds(.4f));
+    StartCoroutine(StallForSeconds(.75f));
 
   }
   
   IEnumerator StallForSeconds(float seconds)
   {
+    audioSrc.clip = deathSound;
+    audioSrc.Play();
     yield return new WaitForSeconds(seconds);
     SceneManager.LoadScene("CreditScene");
 
