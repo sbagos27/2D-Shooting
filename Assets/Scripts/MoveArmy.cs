@@ -56,19 +56,23 @@ public class MoveArmy : MonoBehaviour
 
     void Update()
     {
-        
-        // transform.Translate(Vector3.right * (moveSpeed * Time.deltaTime));
         transform.position += Vector3.right * (moveSpeed * Time.deltaTime);
 
-        if (transform.position.x > startPositionX + farthest || transform.position.x < startPositionX - farthest)
+        if (transform.position.x >= startPositionX + farthest || transform.position.x <= startPositionX - farthest)
         {
-            moveSpeed *= -1; 
-            transform.position += Vector3.down*0.25f;
+            moveSpeed *= -1;
+            transform.position = new Vector3(
+                Mathf.Clamp(transform.position.x, startPositionX - farthest, startPositionX + farthest), 
+                transform.position.y - 0.25f, 
+                transform.position.z
+            );
         }
-        
+
         if (enemyCount == 0)
         {
             newWave();
         }
     }
+
+    
 }
